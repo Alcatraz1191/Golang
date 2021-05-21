@@ -23,7 +23,7 @@ func main(){
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
 	r.HandleFunc("/api/books/{id}", getBook).Methods("GET")
 	r.HandleFunc("/api/books", createBook).Methods("POST")
-	//r.HandleFunc("/api/books/{id]", updateBook).Method("GET")
+	r.HandleFunc("/api/books/{id]", updateBook).Method("GET")
 	//r.HandleFunc("/api/books/{id}", deleteBook).Method("GET")
 
 	//set port
@@ -109,4 +109,22 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(result)
+}
+
+func updateBook(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+
+	var params = mux.Vars(r)
+
+	//get id from parameters
+	id, _ := primitive.ObjectIDFromHex(params["id"])
+
+	var book models.Book
+
+	//create filter
+	filter := bson.M{"_id": id}
+
+	//Read update model from body
+	_ = json.NewDecoder(r.Body).Decode(&book)
+	
 }
