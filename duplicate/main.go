@@ -18,5 +18,4 @@ func removeDuplicates(nums []int) int {
 func main(){
 	nums := []int{1, 1, 1, 1, 1}
 	fmt.Println(removeDuplicates(nums))
-
 }
