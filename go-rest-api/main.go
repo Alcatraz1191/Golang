@@ -37,4 +37,6 @@ func handleRequests(){
 func returnAllArticles(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Endpoint hit: returnAllArticles")
 	json.NewEncoder(w).Encode(Articles)
+
+	
 }
