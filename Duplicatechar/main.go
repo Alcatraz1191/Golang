@@ -5,7 +5,8 @@ import (
 )
 
 func main() {
-	fmt.Println(DuplicateCharOneLoop("aaidd"))
+	fmt.Println(DuplicateCharOneLoop("aabdd"))
+	fmt.Println(DuplicateCharTwoLoop("aabdd"))
 }
 
 
