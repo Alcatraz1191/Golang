@@ -40,5 +40,9 @@ func DuplicateCharOneLoop(s string) string {
 		}
 	}
 	
-	return string(sli[0])
+	if len(sli) != 0{
+		return string(sli[0])
+	} else {
+		return "Unique character not found"
+	}
 }
