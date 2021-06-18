@@ -10,7 +10,7 @@ import (
 
 func main() {
 	s := []int{2, 5, 10}
-	b := minBars(4, s)
+	b := minBars(15, s)
 	fmt.Println(b)
 }
 
@@ -30,4 +30,10 @@ func minBars(ounces int, s []int) int {
 		}
 	}
 	return barCount
+}
+
+func minBarsNoResidue(ounces int, s []int) int {
+	sort.Ints(s)
+
+	return 0
 }
