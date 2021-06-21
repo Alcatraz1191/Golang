@@ -13,7 +13,7 @@ import (
 
 //connectDB: Lets you connect to mongoDB
 //start with uppercase to see function when you import on other class
-func ConnectDB() *mongo.Collection{
+func ConnectDB() *mongo.Collection {
 
 	//set client options
 	ClientOptions := options.Client().ApplyURI("mongodb://127.0.0.1:27017/?readPreference=primary&appname=mongodb-vscode%200.5.0&ssl=false")
@@ -34,8 +34,8 @@ func ConnectDB() *mongo.Collection{
 //ErrorResponse error model
 
 type ErrorResponse struct {
-	StatusCode int	`json:"status"`
-	ErrorMessage string	`json:"message"`
+	StatusCode   int    `json:"status"`
+	ErrorMessage string `json:"message"`
 }
 
 //GetError helper function for error model
@@ -43,9 +43,9 @@ type ErrorResponse struct {
 func GetError(err error, w http.ResponseWriter) {
 
 	log.Fatal(err.Error())
-	var response = ErrorResponse {
+	var response = ErrorResponse{
 		ErrorMessage: err.Error(),
-		StatusCode: http.StatusInternalServerError,
+		StatusCode:   http.StatusInternalServerError,
 	}
 
 	message, _ := json.Marshal(response)
@@ -53,4 +53,3 @@ func GetError(err error, w http.ResponseWriter) {
 	w.WriteHeader(response.StatusCode)
 	w.Write(message)
 }
-
