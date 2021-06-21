@@ -26,7 +26,7 @@ func (e *engine)getEngineType() string{
 	return e.engineType
 }
 
-func (e* engine)getEnginePower() int {
+func (e *engine)getEnginePower() int {
 	return e.power
 }
 
