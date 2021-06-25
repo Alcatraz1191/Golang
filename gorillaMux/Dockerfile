@@ -14,7 +14,6 @@ ADD . /app
 
 WORKDIR /app
 
-EXPOSE 8080
 
 ## Add git to alpine 1.12.0
 RUN apk add --no-cache git
