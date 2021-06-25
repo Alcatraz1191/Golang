@@ -26,9 +26,8 @@ func getTrades(w http.ResponseWriter, r *http.Request){
 	v := connectAPI("wss://api.hitbtc.com/api/2/ws/", "getTrades", "ETHBTC")
 	json.NewEncoder(w).Encode(v)
 }
-
-
 func main() {
+
 
 	r := mux.NewRouter()
 
