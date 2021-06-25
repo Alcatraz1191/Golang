@@ -70,8 +70,13 @@ func connectAPI(connString string, methodString string, paramSymbol string) inte
 	fmt.Println(m)
 	if paramSymbol == ""{
 		err = conn.ReadJSON(&v)
+		fmt.Println(v)
 	} else {
 		err = conn.ReadJSON(&t)
+		for i := 0; i < len(v.Result); i++{
+			fmt.Printf("\n%v",v.Result[i])
+		}
+		fmt.Println(t)
 		return t
 	}
 
