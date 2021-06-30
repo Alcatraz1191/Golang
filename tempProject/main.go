@@ -73,7 +73,10 @@ func getToken(){
 	urlstr := "https://login.microsoftonline.com/b60a4dea-e2d5-4d1f-b023-fd03ef62c77b/oauth2/token"
 	client := &http.Client{}
 
-	resp, _ := client.PostForm(urlstr, val)
+	resp, err := client.PostForm(urlstr, val)
+	if err != nil{
+		panic(err)
+	}
 	fmt.Println(resp.Status)
 	fmt.Println(resp.Body)
    json.NewDecoder(resp.Body).Decode(&tokenresp)
@@ -93,18 +96,30 @@ func openFile(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Authorization", fmt.Sprintf("Bearer %v", tokenresp.AccessToken))
 	w.Header().Set("Content-Type", "application/json")
 	client := &http.Client{}
-	req, _ := http.NewRequest("GET", "https://mystorage1.azuredatalakestore.net/webhdfs/v1/test/"+params["filename"]+"/?op=OPEN", nil)
+	req, err := http.NewRequest("GET", "https://mystorage1.azuredatalakestore.net/webhdfs/v1/test/"+params["filename"]+"/?op=OPEN", nil)
+	if err != nil{
+		panic(err)
+	}
 	req.Header.Set("Authorization", "Bearer "+tokenresp.AccessToken)
 	resp, _ := client.Do(req)
-	respData, _ := ioutil.ReadAll(resp.Body)
+	respData, err := ioutil.ReadAll(resp.Body)
+	if err != nil{
+		panic(err)
+	}
 	//fmt.Println(resp.Body)
 	claims := jwt.MapClaims{}
 
 	var p *jwt.Parser
 	var jdata *JSONData
-	_, parts, _ := p.ParseUnverified(string(respData), claims)
+	_, parts, err := p.ParseUnverified(string(respData), claims)
+	if err != nil{
+		panic(err)
+	}
 	s := strings.Join(parts, "")
-	_ = json.Unmarshal([]byte(s), &jdata)
+	err = json.Unmarshal([]byte(s), &jdata)
+	if err != nil{
+		panic(err)
+	}
 	json.NewEncoder(w).Encode(&jdata)
 }
 
@@ -143,5 +158,4 @@ func uploadFile(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
