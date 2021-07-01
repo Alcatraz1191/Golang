@@ -1,15 +1,23 @@
 package main
 
 import (
+	//"bytes"
+	//"bytes"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"mime/multipart"
+
+	//"mime/multipart"
+	"os"
+
+	//"mime/multipart"
 	"net/http"
 	"net/url"
-	"os"
+
+	//"os"
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -88,6 +96,7 @@ func main(){
 	getToken()
 	r.HandleFunc("/openFile/{filename}", openFile).Methods("GET")
 	r.HandleFunc("/uploadFile", uploadFile).Methods("GET")
+	r.HandleFunc("/changePerm/", changePerm).Methods("PUT")
 	http.ListenAndServe(":8080", r)
 }
 
@@ -124,7 +133,8 @@ func openFile(w http.ResponseWriter, r *http.Request){
 }
 
 func uploadFile(w http.ResponseWriter, r *http.Request){
-	file, err := os.Open("file")
+	
+	file, err := os.Open("file copy")
 	if err != nil {
 		panic(err)
 	}
@@ -151,11 +161,40 @@ func uploadFile(w http.ResponseWriter, r *http.Request){
 		panic(err)
 	}
 
-	req, _ := http.NewRequest("PUT", "https://mystorage1.azuredatalakestore.net/webhdfs/v1/test/file?op=CREATE", body)
+	req, _ := http.NewRequest("PUT", "https://mystorage1.azuredatalakestore.net/webhdfs/v1/test/filecopy?op=CREATE", body)
+	
+	req.Header.Set("Authorization", "Bearer "+tokenresp.AccessToken)
+	
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(resp)
+}
+
+
+
+func changePerm(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Authorization", fmt.Sprintf("Bearer %v", tokenresp.AccessToken))
+	q := r.URL.Query()
+	decodedURL, err := url.PathUnescape(q["path"][0])
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("PUT", "https://mystorage1.azuredatalakestore.net/webhdfs/v1/"+decodedURL+"?op=SETPERMISSION&permission="+q["perms"][0], nil)
+	req.Header.Set("Authorization", "Bearer "+tokenresp.AccessToken)
+	fmt.Println("?op=SETPERMISSION&permission="+q["perms"][0])
+	fmt.Println(decodedURL, q["perms"][0])
+	if err != nil {
+		panic(err)
+	}
 
 	client := &http.Client{}
 	_, err = client.Do(req)
-	if err != nil {
-		log.Fatal(err)
+	if err != nil{
+		panic(err)
 	}
 }
