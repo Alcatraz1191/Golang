@@ -1,8 +1,7 @@
 package main
 
 import (
-	//"bytes"
-	//"bytes"
+
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -10,14 +9,11 @@ import (
 	"log"
 	"mime/multipart"
 
-	//"mime/multipart"
 	"os"
 
-	//"mime/multipart"
 	"net/http"
 	"net/url"
 
-	//"os"
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
