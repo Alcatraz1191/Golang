@@ -1,6 +1,6 @@
 {
     "go.goroot": "",
     "go.toolsEnvVars": {
-        "GO111MODULE" : "on"
+        "GO111MODULE" : "auto"
     }
 }

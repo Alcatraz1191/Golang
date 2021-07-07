@@ -105,7 +105,7 @@ func openFile(w http.ResponseWriter, r *http.Request){
 	if err != nil{
 		panic(err)
 	}
-	req.Header.Set("Authorization", "Bearer "+tokenresp.AccessToken)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", tokenresp.AccessToken))
 	resp, _ := client.Do(req)
 	respData, err := ioutil.ReadAll(resp.Body)
 	if err != nil{
