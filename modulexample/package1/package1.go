@@ -4,5 +4,5 @@ import "fmt"
 
 
 func Greet(){
-	fmt.Println("Hello from package1, temp-branch")
+	fmt.Println("Hello from package1, master-branch")
 }
