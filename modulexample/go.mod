@@ -1,4 +1,4 @@
-module modulexample
+module github.com/Alcatraz1101/Golang/modulexample
 
 go 1.17
 

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"modulexample/example.com/package1"
+	"github.com/Alcatraz1191/Golang/modulexample/package1"
 )
 
 
