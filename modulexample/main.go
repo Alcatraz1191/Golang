@@ -7,6 +7,6 @@ import (
 
 
 func main() {
-	fmt.Println("Hello")
-	package1.Hellowriter()
+	//fmt.Println("Hello")
+	package1.Greet()
 }
